@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Takt Time Clock</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <!-- HTML elements for the countdown clock and actual/goal boats -->
+    <div id="clock"></div>
+	<div id="countdown"></div>
+    <!-- HTML element for the times list -->
+    <ul id="times"></ul><br>
+	<!-- HTML element to define the audio file -->
+    <audio id="alarm" src="Price-is-right-losing horn.mp3"></audio>
+	
+    <!-- JavaScript code to update the clock, record times, and display the times list -->
+   <script>
+  // Prompt the user for the goal boats
+  let goalBoats = parseInt(window.prompt("Enter the goal boats:"));
+
+    // Calculate the countdown time based on the goal boats
+  let initialCountdownTime = 420 / goalBoats * 60;
+  let countdownTime = initialCountdownTime;
+ 
+  // Set the current boats to 0
+  let currentBoats = 0;
+
+  // Initialize an array to store the times for each boat
+  let times = [];
+
+  // Display the actual and goal boats as numbers
+  document.getElementById("countdown").innerHTML = `Completed Boats: ${currentBoats} / Goal boats: ${goalBoats}`;
+
+  let paused = false; // variable to track whether the clock is paused or not
+  
+  // Add an event listener for the keydown event
+  document.addEventListener("keydown", function(event) {
+    // Check if the key is the spacebar
+    if (event.key === " ") {
+      // Toggle the value of the paused variable
+      paused = !paused;
+    }
+  });
+
+  // Set the interval to update the clock every second
+  let intervalId = setInterval(function() {
+    // Check if the clock is paused
+    if (paused) {
+      return; // do not update the clock if it is paused
+    }
+    // Decrement the countdown time
+    countdownTime--;
+
+    // Calculate the minutes and seconds remaining
+    let minutes = Math.floor(countdownTime / 60);
+    let seconds = countdownTime % 60;
+
+    // Display the clock with leading zeros for single digits
+    document.getElementById("clock").innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+// If the countdown reaches zero and the current boats have not reached the goal boats, do not reset the countdown time
+    if (countdownTime <= 0 && currentBoats < goalBoats) {
+      return;
+    }
+    // If the countdown reaches zero and the current boats have reached the goal boats, stop the interval
+    if (countdownTime <= 0 && currentBoats >= goalBoats) {
+      clearInterval(intervalId);
+      return;
+    }
+  }, 1000);
+
+    // Add an event listener for the keydown event
+document.addEventListener("keydown", function(event) {
+  // Check if the key is Enter
+  if (event.key === "Enter") {
+    // Check if the current boats has reached the goal boats
+    if (currentBoats >= goalBoats) {
+      countdownTime = initialCountdownTime;
+      currentBoats = 0;
+      times = [];
+    } else {
+      // Increment the current boats
+      currentBoats++;
+
+      // Prompt the user for the type of boat completed
+      let boatType = window.prompt("Enter the type of boat completed:");
+	  
+      // Calculate the elapsed time in minutes and seconds
+      let elapsedMinutes = Math.floor((initialCountdownTime - countdownTime) / 60);
+      let elapsedSeconds = (initialCountdownTime - countdownTime) % 60;
+
+
+      // Record the time and type of boat completed
+      times.push(`Boat ${currentBoats}: ${elapsedMinutes}:${elapsedSeconds.toString().padStart(2, "0")} (${boatType})`);
+
+      // Reset the countdown time to the initial value
+      countdownTime = initialCountdownTime;
+
+      // Update the actual boats in the countdown
+      document.getElementById("countdown").innerHTML = `Completed Boats: ${currentBoats} / Goal boats: ${goalBoats}`;
+
+      // Create a list of the times
+      let timesList = "";
+
+      for (let i = 0; i < times.length; i++) {
+        timesList += `<li>${times[i]}</li>`;
+      }
+
+      // Display the times list
+      document.getElementById("times").innerHTML = timesList;
+    }
+  }
+});
+    </Script>
+ <div id="directions">Press the Spacebar to go on Break or Lunch.  Press Enter at the completion of a boat and enter the Model Boat when prompted.</div>
+    </body>
+	
+	</html>

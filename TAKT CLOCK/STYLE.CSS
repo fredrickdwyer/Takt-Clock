@@ -1,0 +1,67 @@
+/* CSS code for the website */
+@font-face {
+  font-family: "Digital-7";
+  src: url("font/Technology-Bold.ttf") format("truetype");
+}
+#clock,
+#countdown{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#clock {
+  /* Other styles for the clock go here */
+  font-family: "Digital-7";
+  font-size: 500px;
+  font-weight: bold;
+  color: red;
+  padding: 20px 0;
+  vertical-align:Top
+}
+
+#countdown {
+  /* Other styles for the countdown go here */
+  font-size: 50px;
+  color: green;
+  padding: 20px 0;
+  vertical-align:Middle
+}
+
+#times {
+  /* Other styles for the times go here */
+  font-size: 24px;
+  color: white;
+  display: block; /* This makes the element a block-level element */
+  margin: auto; /* This centers the element horizontally */
+  position: relative; /* This positions the element relative to its normal position */
+  top: 20px; /* This offsets the element 20px from its normal position */
+  text-align: center; /* This centers the text within the element */
+  list-style-position: inside; /* This positions the bullets inside the list items */
+}
+
+#directions {
+  font-size: 24px;
+  color: white;
+  display: block; /* This makes the element a block-level element */
+  margin: auto; /* This centers the element horizontally */
+  position: relative; /* This positions the element relative to its normal position */
+  top: 20px; /* This offsets the element 20px from its normal position */
+  text-align: center; /* This centers the text within the element */
+}
+body {
+  background-color: black;
+}
+/*
+  Apply responsive styles for devices with a viewport width of less than 500px
+*/
+
+@media (max-width: 500px) {
+  /* Reduce the font size of the clock and countdown */
+  #clock {
+    font-size: 24px;
+  }
+
+  #countdown {
+    font-size: 18px;
+  }
+}
